@@ -55,12 +55,12 @@ export const leaveMatch = async (req: Request, res: Response) => {
     let match = await prisma.match.findUnique({where: {id: parseInt(matchId)}});
 
     if (match?.state === 'WAITING') {
+        match.state = 'CANCELLED';
         match = await prisma.match.update({where: {id: parseInt(matchId)}, data: {state: 'CANCELLED'}});
     } else if (match?.state === 'PLAYING') {
+        match.state = 'FINISHED';
         match =  await prisma.match.update({where: {id: parseInt(matchId)}, data: {state: 'FINISHED'}});
     }
-
-    
 
     return res.json(match)
 }
