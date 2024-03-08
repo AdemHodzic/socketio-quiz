@@ -8,7 +8,71 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  username String  @unique
-  password  String
+  id            Int             @id @default(autoincrement())
+  username      String          @unique
+  password      String
+  MatchUser     MatchUser[]
+  MatchQuestion MatchQuestion[]
+}
+
+model Answer {
+  id         Int     @id @default(autoincrement())
+  body       String
+  is_correct Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id   Int    @id @default(autoincrement())
+  body String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  answers       Answer[]
+  MatchQuestion MatchQuestion[]
+}
+
+enum MatchState {
+  WAITING
+  PLAYING
+  FINISHED
+  CANCELLED
+}
+
+model Match {
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  MatchUser     MatchUser[]
+  MatchQuestion MatchQuestion[]
+  state         MatchState
+}
+
+model MatchUser {
+  matchId Int
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  match   Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@id([matchId, userId])
+}
+
+model MatchQuestion {
+  matchId    Int
+  questionId Int
+  match      Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  is_done Boolean
+  // user who answered the question corerctly
+  userId  Int?
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([matchId, questionId])
 }
