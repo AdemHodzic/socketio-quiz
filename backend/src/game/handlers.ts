@@ -1,16 +1,14 @@
 import { Response, Request } from 'express';
 import prisma from '../db';
-import { User } from '@prisma/client';
+import { Question, User } from '@prisma/client';
 
 export const createMatch = async (req: Request, res: Response) => {
     //@ts-ignore
     const user: User = req.user;
 
-    // get 5 random questions
-    const questions = await prisma.question.findMany({
-        take: 5,
-        skip: Math.floor(Math.random() * 10)
-    });
+    const questions = await prisma.$queryRawUnsafe<Question[]>(`
+        SELECT * FROM "Question" ORDER BY random() LIMIT 5;
+    `) 
 
     // create a new match
     const match = await prisma.match.create({data: {

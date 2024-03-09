@@ -2,7 +2,7 @@ import { Socket, io } from "socket.io-client";
 
 import { defineStore } from 'pinia'
 
-import { join } from '../api'
+import api from '../api'
 import router from "../routes";
 
 const handleStartGame = () => {
@@ -15,7 +15,7 @@ const useGame = defineStore('game', {
     actions: {
         async join() {
             console.log('join')
-            const match = await join();
+            const match = await api.join();
 
             this.match = match;
 
@@ -29,11 +29,36 @@ const useGame = defineStore('game', {
                 this.question = question
             })
 
+            this.socket.on('end_game', (match) => {
+                const { id } = match;
+
+                this.match = null;
+                this.socket?.disconnect()
+                this.socket = null
+
+                router.push({ name: 'results', params: { matchId: id } })
+            })
+
+            this.socket.on('cancel_game', () => {
+                this.match = null;
+                this.socket?.disconnect()
+                this.socket = null
+            })
+
+
+
 
             return match
         },
         leave() {
-            console.log('leave')
+            if (this.socket) {
+                this.match = null;
+
+                this.socket.disconnect();
+                this.socket = null;
+
+                router.push({ name: 'main' })
+            }
         },
         answer(answerId: string) {
             console.log(answerId)

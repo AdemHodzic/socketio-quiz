@@ -43,3 +43,11 @@ io.of("/").adapter.on("join-room", async (room, id) => {
     io.to(room).emit('next_question', question);
   }
 });
+
+io.of("/").adapter.on("leave-room", async (room, id) => {
+  console.log(`socket ${id} has left room ${room}`);
+  
+  const match = await socketHandlers.end_game(room);
+
+  io.to(room).emit('end_game', match);
+});

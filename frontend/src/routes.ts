@@ -13,7 +13,7 @@ const routes = [
     { path: '/login', component: Login, name: 'login' },
     { path: '/main', component: Main, name: 'main' },
     { path: '/register', component: Register, name: 'register' },
-    { path: '/results', component: Results, name: 'results' },
+    { path: '/results/:matchId', component: Results, name: 'results' },
     { path: '/', redirect: '/main' }
 ]
 

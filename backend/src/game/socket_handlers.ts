@@ -51,7 +51,48 @@ const getNextQuestion = async (matchId: number) => {
 
 }
 
+const end_game = async (matchId: number) => {
+    // const matchExists = await prisma.match.findFirst({
+    //     where: {
+    //         id: matchId,
+    //         state: {
+    //             not: 'FINISHED',
+    //         }
+    //     }
+    // }) !== null;
+
+    const matchExists = Number.isInteger(matchId);
+
+    if (!matchExists) {
+        return null;
+    }
+
+    const match = await prisma.match.findFirst({
+        where: {
+            id: matchId,
+        }
+    })
+
+    if (!match) {
+        return null;
+    }
+
+    const newState = match.state === 'WAITING' ? 'CANCELLED' : 'FINISHED';
+
+    const updatedMatch = await prisma.match.update({
+        where: {
+            id: matchId,
+        },
+        data: {
+            state: newState,
+        }
+    })
+
+    return updatedMatch
+}
+
 export default {
     join,
     getNextQuestion,
+    end_game,
 }

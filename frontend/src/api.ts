@@ -23,3 +23,9 @@ export const join = async () => {
     const match  = await axios.post('/game/join').then(res => res.data);
     return match;
 }
+
+export default {
+    login,
+    register,
+    join,
+}
