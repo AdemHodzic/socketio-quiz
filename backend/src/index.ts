@@ -1,6 +1,8 @@
 
 import { Server } from 'socket.io';
 
+import socketHandlers from './game/socket_handlers';
+
 
 import app from "./app";
 
@@ -21,5 +23,23 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+
+  socket.on('join', (room) => {
+    socketHandlers.join(socket, room)
+  });
+
+});
+
+io.of("/").adapter.on("join-room", async (room, id) => {
+  console.log(`socket ${id} has joined room ${room}`);
+  const roomSize = io.sockets.adapter.rooms.get(room)?.size;
+  if (roomSize === 2) {
+    console.log(`Starting game in room ${room}`);
+    io.to(room).emit('start_game');
+
+    // Get the first question
+    const question = await socketHandlers.getNextQuestion(room);
+
+    io.to(room).emit('next_question', question);
+  }
 });

@@ -85,8 +85,6 @@ export const joinMatch = async (req: Request, res: Response) => {
         }
     });
 
-    console.log(user, match)
-
     if (!match) {
         return createMatch(req, res);
     }
