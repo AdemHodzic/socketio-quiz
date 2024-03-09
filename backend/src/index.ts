@@ -28,6 +28,36 @@ io.on('connection', (socket) => {
     socketHandlers.join(socket, room)
   });
 
+  socket.on('answer', async (data) => {
+    const result = await socketHandlers.answerQuestion(data);
+
+    if (result === 'INVALID_ANSWER') {
+      return;
+    }
+
+    if (result === "CORRECT") {
+      socket.emit('answer_result', { correct: true });
+    } else {
+      socket.emit('answer_result', { correct: false });
+    }
+
+    if (result === "CORRECT" || result === "EVERYONE_ANSWERED") {
+
+      const { matchId } = data;
+      const question = await socketHandlers.getNextQuestion(matchId);
+
+      if (!question) {
+        const match = await socketHandlers.end_game(matchId);
+
+        if (match) {
+          io.to(matchId).emit('end_game', match);
+        }
+      } else {
+        io.to(matchId).emit('next_question', question);
+      }
+    } 
+  });
+
 });
 
 io.of("/").adapter.on("join-room", async (room, id) => {
@@ -49,5 +79,7 @@ io.of("/").adapter.on("leave-room", async (room, id) => {
   
   const match = await socketHandlers.end_game(room);
 
-  io.to(room).emit('end_game', match);
+  if (match) {
+    io.to(room).emit('end_game', match);
+  }
 });

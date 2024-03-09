@@ -3,9 +3,12 @@
         <h1>Game</h1>
         <div v-if="gameStore.question" class="question-container">
             <h2>{{ gameStore.question.body }}</h2>
+
+            <h4 v-if="gameStore.feedback !== null" :style="{'color': gameStore.feedback ? 'green' : 'red'}">{{ gameStore.feedback ? "Correct Answer" : "Incorrect answer"  }}</h4>
+
             <div class="answers-container">
-                <div v-for="answer in gameStore.question.answers" :key="answer.id">
-                    <button @click="gameStore.answer(answer.id)">{{ answer.body }}</button>
+                <div v-for="answer in gameStore.question.answers" :key="answer.id" >
+                    <button @click="gameStore.answer(answer.id)" :style="{'color': answer.is_correct ? 'green' : 'red'}" :disabled="gameStore.feedback !== null" >{{ answer.body }}</button>
                 </div>
             </div>
         </div>
