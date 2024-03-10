@@ -6,6 +6,8 @@ import { validToken } from '../auth/middleware';
 
 const router = Router();
 
+
+
 router.get('/results/:matchId', validToken, getResults);
 router.post('/create', validToken, createMatch);
 router.post('/join', validToken, joinMatch);

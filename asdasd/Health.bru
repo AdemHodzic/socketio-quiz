@@ -1,0 +1,15 @@
+meta {
+  name: Health
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:3000/admin/questions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJpYXQiOjE3MTAwNzQyNjV9.BbNVRghcWKs9o5nZXe_dOZNaoPYiZbztUcN3p4kXtY8
+}

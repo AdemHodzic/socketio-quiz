@@ -95,16 +95,24 @@ const questionData: Prisma.QuestionCreateInput[] = [
 
 async function main() {
   console.log(`Start seeding ...`)
-  for (const u of userData) {
-    const user = await createUser(u.username, u.password);
-    console.log(`Created user with id: ${user.id}`)
+
+  const countUsers = await prisma.user.count();
+
+  if (countUsers === 0) {
+    for (const u of userData) {
+      const user = await createUser(u.username, u.password);
+      console.log(`Created user with id: ${user.id}`)
+    }
   }
 
-  for (const q of questionData) {
-    const question = await prisma.question.create({
-      data: q,
-    })
-    console.log(`Created question with id: ${question.id}`)
+  const countQuestions = await prisma.question.count();
+  if (countQuestions === 0) {
+    for (const q of questionData) {
+      const question = await prisma.question.create({
+        data: q,
+      })
+      console.log(`Created question with id: ${question.id}`)
+    }
   }
 
   console.log(`Seeding finished.`)

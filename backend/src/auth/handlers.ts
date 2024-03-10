@@ -6,8 +6,6 @@ import { Request, Response } from 'express';
 import { User } from "@prisma/client";
 import { createUser } from "./service";
 
-//TODO: Stop sending password in jwt token
-
 export const login = async (req: Request, res: Response) => {
     //@ts-ignore
     const { username, password } = req.body;
