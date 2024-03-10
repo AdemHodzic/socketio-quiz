@@ -87,3 +87,18 @@ export const getQuestions = async (req: Request, res: Response) => {
 
     return res.status(200).json({questions});
 }
+
+export const getQuestion = async (req: Request, res: Response) => {
+    const { id } = req.params as any;
+
+    const question = await prisma.question.findUnique({
+        where: {
+            id: parseInt(id),
+        },
+        include: {
+            answers: true,
+        }
+    });
+
+    return res.status(200).json({question});
+}
