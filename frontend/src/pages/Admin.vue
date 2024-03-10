@@ -1,7 +1,8 @@
 <template>
     <div>
         <h1>Admin panel</h1>
-
+        <router-link :to="{'name': 'main'}">Go to main menu</router-link>
+        <br>
         <router-link :to="{ 'name': 'new-question'}">Add new question</router-link>
 
         <table>

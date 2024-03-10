@@ -29,6 +29,11 @@ export const join = async () => {
     return match;
 }
 
+export const results = async (matchId: string) => {
+    return await axios.get(`/game/results/${matchId}`).then(res => res.data);
+
+}
+
 // Questions
 
 export const getQuestions = async () => {
@@ -55,7 +60,9 @@ export default {
     login,
     register,
     me,
+
     join,
+    results,
 
     getQuestions,
     getQuestion,

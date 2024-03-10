@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <h1>Game</h1>
+        <router-link :to="{'name': 'main'}">Go to main menu</router-link>
         <div v-if="gameStore.question" class="question-container">
             <h2>{{ gameStore.question.body }}</h2>
 
@@ -17,6 +18,7 @@
 
 <script>
 
+import router from '../routes'
 import useGame from '../store/useGame'
 
 import { mapStores } from 'pinia'
