@@ -35,12 +35,16 @@ export const getQuestions = async () => {
     return await axios.get('/admin/questions').then(res => res.data);
 }
 
+export const getQuestion = async (id: string) => {
+    return await axios.get(`/admin/questions/${id}`).then(res => res.data);
+}
+
 export const createQuestions = async (questions: any) => {
     return await axios.post('/admin/questions', questions);
 }
 
 export const updateQuestions = async (questions: any) => {
-    return await axios.put('/admin/questions', questions);
+    return await axios.patch('/admin/questions', questions);
 }
 
 export const deleteQuestions = async (ids: string[]) => {
@@ -54,6 +58,7 @@ export default {
     join,
 
     getQuestions,
+    getQuestion,
     createQuestions,
     updateQuestions,
     deleteQuestions,

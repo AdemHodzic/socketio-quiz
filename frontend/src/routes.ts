@@ -7,6 +7,8 @@ import Main from './pages/Main.vue';
 import Register from './pages/Register.vue';
 import Results from './pages/Results.vue';
 import Admin from './pages/Admin.vue';
+import EditQuestion from './pages/EditQuestion.vue';
+
 import useAuth from './store/useAuth';
 
 const routes = [
@@ -16,6 +18,7 @@ const routes = [
     { path: '/main', component: Main, name: 'main' },
     { path: '/register', component: Register, name: 'register' },
     { path: '/results/:matchId', component: Results, name: 'results' },
+    { path: '/admin/:id', component: EditQuestion, name: 'edit-question' },
     { path: '/admin', component: Admin, name: 'admin' },
     { path: '/', redirect: '/main' }
 ]

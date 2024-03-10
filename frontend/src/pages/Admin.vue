@@ -2,8 +2,6 @@
     <div>
         <h1>Admin panel</h1>
 
-        <!-- <pre>{{ questions }}</pre> -->
-
         <table>
             <thead>
                 <tr>
@@ -25,7 +23,7 @@
                     </td>
                     <td>
                         <button @click="deleteQuestion(question.id)">Delete</button>
-                        <button @clcik="editQuestion(question.id)">Edit question</button>
+                        <button @click="editQuestion(question.id)">Edit question</button>
                     </td>
                 </tr>
             </tbody>
@@ -52,8 +50,12 @@ export default {
             await api.deleteQuestions([id])
             this.questions = this.questions.filter(question => question.id !== id)
         },
-        async editQuestion(id) {
-            // this.$router.push(`/admin/${id}`)
+        editQuestion(id) {
+            console.log('edit question', id)
+            this.$router.push({
+                name: 'edit-question',
+                params: { id }
+            })
         }
     },
     mounted() {
