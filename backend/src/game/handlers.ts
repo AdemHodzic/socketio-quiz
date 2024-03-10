@@ -1,6 +1,35 @@
 import { Response, Request } from 'express';
 import prisma from '../db';
 import { Question, User } from '@prisma/client';
+import { cancelMatch, finishMatch } from './service';
+
+type QuestionResult = {
+    question: string;
+    question_winner: number;
+    question_answer: string;
+}
+
+export const getResults = async (req: Request, res: Response) => {
+    const { matchId } = req.params;
+
+    const results = await prisma.$queryRawUnsafe<QuestionResult[]>(`
+        SELECT
+            q.body as question,
+            mq."userId" as question_winner,
+            a.body as question_answer
+        FROM
+            "MatchQuestion" mq
+            INNER JOIN "Question" q ON q.id = mq."questionId"
+            INNER JOIN "Answer" a ON a."questionId" = q.id
+            AND a.is_correct
+        WHERE
+            mq."matchId" = ${matchId}
+        ORDER BY
+            mq."updatedAt" asc
+    `);
+
+    return res.json(results);
+}
 
 export const createMatch = async (req: Request, res: Response) => {
     //@ts-ignore
@@ -34,6 +63,8 @@ export const createMatch = async (req: Request, res: Response) => {
     return res.json(match)
 }
 
+
+
 export const leaveMatch = async (req: Request, res: Response) => {
     //@ts-ignore
     const user: User = req.user;
@@ -54,10 +85,10 @@ export const leaveMatch = async (req: Request, res: Response) => {
 
     if (match?.state === 'WAITING') {
         match.state = 'CANCELLED';
-        match = await prisma.match.update({where: {id: parseInt(matchId)}, data: {state: 'CANCELLED'}});
+        match = await cancelMatch(parseInt(matchId));
     } else if (match?.state === 'PLAYING') {
         match.state = 'FINISHED';
-        match =  await prisma.match.update({where: {id: parseInt(matchId)}, data: {state: 'FINISHED'}});
+        match = await finishMatch(parseInt(matchId));
     }
 
     return res.json(match)

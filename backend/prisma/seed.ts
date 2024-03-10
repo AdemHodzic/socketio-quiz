@@ -1,8 +1,9 @@
 import { PrismaClient, Prisma } from '@prisma/client'
+import { createUser } from '../src/auth/service'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.UserCreateInput[] = [
+const userData = [
   {
     username: 'alice',
     password: 'password',
@@ -95,11 +96,7 @@ const questionData: Prisma.QuestionCreateInput[] = [
 async function main() {
   console.log(`Start seeding ...`)
   for (const u of userData) {
-    const user = await prisma.user.upsert({
-      where: { username: u.username },
-      update: {},
-      create: u,
-    })
+    const user = await createUser(u.username, u.password);
     console.log(`Created user with id: ${user.id}`)
   }
 

@@ -4,6 +4,7 @@ import prisma from "../db";
 import { SECRET_KEY } from "../constants";
 import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
+import { cancelMatch, finishMatch } from "./service";
 
 
 const join = (socket: Socket, matchId: string) => {
@@ -44,7 +45,7 @@ const end_game = async (matchId: number) => {
         return null;
     }
 
-    const match = await prisma.match.findFirst({
+    let match = await prisma.match.findFirst({
         where: {
             id: matchId,
         }
@@ -54,18 +55,13 @@ const end_game = async (matchId: number) => {
         return null;
     }
 
-    const newState = match.state === 'WAITING' ? 'CANCELLED' : 'FINISHED';
+    if (match.state === 'WAITING') {
+        match = await cancelMatch(matchId)
+    } else {
+        match = await finishMatch(matchId)
+    }
 
-    const updatedMatch = await prisma.match.update({
-        where: {
-            id: matchId,
-        },
-        data: {
-            state: newState,
-        }
-    })
-
-    return updatedMatch
+    return match
 }
 
 type AnswerQuestionPayload = {
@@ -129,6 +125,7 @@ const answerQuestion: (paylaod: AnswerQuestionPayload) => Promise<AnswerQuestion
             },
             data: {
                 is_done: true,
+                userId: user.id,
             }
         });
 
