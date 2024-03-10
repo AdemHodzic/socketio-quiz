@@ -19,7 +19,9 @@
 
 <script>
 
-import { login } from "../api"
+import useAuth from '../store/useAuth'
+
+import { mapStores } from 'pinia'
 
 export default {
     data() {
@@ -28,17 +30,12 @@ export default {
             password: '',
         }
     },
+    computed: {
+        ...mapStores(useAuth),
+    },
     methods: {
         async login() {
-
-            try {
-                const response = await login(this.username, this.password)
-                console.log(response)
-                this.$router.push('/')
-            } catch (error) {
-                // TODO: add toast messages
-                console.error(error)
-            }
+            this.authStore.login(this.username, this.password)
         }
     }
 }

@@ -22,7 +22,9 @@
 </template>
 
 <script>
-import { register } from "../api"
+import useAuth from '../store/useAuth'
+
+import { mapStores } from 'pinia'
 
 export default {
     data() {
@@ -32,16 +34,12 @@ export default {
             repeat_password: '',
         }
     },
+    computed: {
+        ...mapStores(useAuth),
+    },
     methods: {
         async register() {
-
-            try {
-                const response = await register(this.username, this.password)
-                console.log(response)
-                this.$router.push('/')
-            } catch (error) {
-                console.error(error)
-            }
+            this.authStore.register(this.username, this.password)
         }
     }
 }

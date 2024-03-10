@@ -17,6 +17,11 @@ export const register = async (username: string, password: string) => {
     return token;
 }
 
+export const me = async () => {
+    const user = await axios.get('/auth/me').then(res => res.data);
+    return user;
+}
+
 // Game
 
 export const join = async () => {
@@ -27,5 +32,6 @@ export const join = async () => {
 export default {
     login,
     register,
+    me,
     join,
 }
