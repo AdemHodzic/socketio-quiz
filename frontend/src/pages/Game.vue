@@ -33,6 +33,10 @@ export default {
             localStorage.removeItem('token')
             this.$router.push('/login')
         },
+        goToMainMenu () {
+            this.gameStore.leave()
+            router.push({ name: 'main' })
+        }
     }
 }
 

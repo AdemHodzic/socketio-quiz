@@ -11,6 +11,7 @@ import EditQuestion from './pages/EditQuestion.vue';
 import AddQuestion from './pages/AddQuestion.vue';
 
 import useAuth from './store/useAuth';
+import useGame from './store/useGame';
 
 const routes = [
     { path: '/game', component: Game, name: 'game' },
@@ -43,5 +44,14 @@ router.beforeEach((to, from, next) => {
     }
     else next()
   })
+
+router.beforeEach((to, from, next) => {
+    if (from.name === 'game' && to.name === 'main') {
+        const gameStore = useGame();
+        gameStore.leave();
+    }
+
+    next();
+})
 
 export default router;
