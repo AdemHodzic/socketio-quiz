@@ -18,8 +18,11 @@ export const register = async (username: string, password: string) => {
 }
 
 export const me = async () => {
-    const user = await axios.get('/auth/me').then(res => res.data);
-    return user;
+    return await axios.get('/auth/me').then(res => res.data);
+}
+
+export const stats = async () => {
+    return await axios.get('/auth/stats').then(res => res.data);
 }
 
 // Game
@@ -60,7 +63,8 @@ export default {
     login,
     register,
     me,
-
+    stats,
+    
     join,
     results,
 

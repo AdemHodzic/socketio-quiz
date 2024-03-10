@@ -12,6 +12,8 @@
         <button @click="this.gameStore.join">Join</button>
         <button @click="this.gameStore.leave">Leave</button>
 
+        <router-link :to="{'name': 'stats'}">See my stats</router-link>
+
         <pre v-if="gameStore.$state.match">{{ gameStore.$state.match }}</pre>
     </div>
 </template>

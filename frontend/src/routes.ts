@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Debug from './pages/Debug.vue';
 import Game from './pages/Game.vue';
 import Login from './pages/Login.vue';
 import Main from './pages/Main.vue';
 import Register from './pages/Register.vue';
 import Results from './pages/Results.vue';
+import Stats from './pages/Stats.vue';
 import Admin from './pages/Admin.vue';
 import EditQuestion from './pages/EditQuestion.vue';
 import AddQuestion from './pages/AddQuestion.vue';
@@ -21,6 +21,7 @@ const routes = [
     { path: '/admin/question/new', component: AddQuestion, name: 'new-question' },
     { path: '/admin/question/:id', component: EditQuestion, name: 'edit-question' },
     { path: '/admin', component: Admin, name: 'admin' },
+    { path: '/stats', component: Stats, name: 'stats' },
     { path: '/', redirect: '/main' }
 ]
 
