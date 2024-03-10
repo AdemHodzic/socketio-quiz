@@ -21,11 +21,10 @@ export const finishMatch = async (matchId: number) => {
 
     let winnerId = null;
 
-    console.log('FINISHED: ', userResults)
 
-    if (userResults[0].answer_count > userResults[1].answer_count) {
+    if (userResults[0]?.answer_count > userResults[1]?.answer_count) {
         winnerId = userResults[0].user_id;
-    } else if (userResults[0].answer_count < userResults[1].answer_count) {
+    } else if (userResults[0]?.answer_count < userResults[1]?.answer_count) {
         winnerId = userResults[1].user_id;
     }
 
