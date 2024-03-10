@@ -1,0 +1,23 @@
+meta {
+  name: Delete Questions
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3000/admin/questions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJpYXQiOjE3MTAwNzQyNjV9.BbNVRghcWKs9o5nZXe_dOZNaoPYiZbztUcN3p4kXtY8
+}
+
+body:json {
+  {
+    "ids": [
+      14,13
+    ]
+  }
+}

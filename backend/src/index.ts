@@ -42,7 +42,6 @@ io.on('connection', (socket) => {
     }
 
     if (result === "CORRECT" || result === "EVERYONE_ANSWERED") {
-
       const { matchId } = data;
       const question = await socketHandlers.getNextQuestion(matchId);
 

@@ -1,0 +1,64 @@
+meta {
+  name: Create Questions
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/admin/questions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJpYXQiOjE3MTAwNzQyNjV9.BbNVRghcWKs9o5nZXe_dOZNaoPYiZbztUcN3p4kXtY8
+}
+
+body:json {
+  {
+    "questions": [
+      {
+        "body": "Hello, World 1234!",
+        "answers": [
+          {
+            "body": "Hello, World 1!",
+            "is_correct": true
+          },
+          {
+            "body": "Hello, World 2!",
+            "is_correct": false
+          },
+          {
+            "body": "Hello, World 3!",
+            "is_correct": false
+          },
+          {
+            "body": "Hello, World 4!",
+            "is_correct": false
+          }
+        ]
+      },
+      {
+        "body": "Hello, World 5678!",
+        "answers": [
+          {
+            "body": "Hello, World 5!",
+            "is_correct": true
+          },
+          {
+            "body": "Hello, World 6!",
+            "is_correct": false
+          },
+          {
+            "body": "Hello, World 7!",
+            "is_correct": false
+          },
+          {
+            "body": "Hello, World 8!",
+            "is_correct": false
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+meta {
+  name: Update Questions
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:3000/admin/questions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJpYXQiOjE3MTAwNzQyNjV9.BbNVRghcWKs9o5nZXe_dOZNaoPYiZbztUcN3p4kXtY8
+}
+
+body:json {
+  {
+    "questions": [
+      {
+        "id": 14,
+        "body": "Hello, World 8765!",
+        "createdAt": "2024-03-10T12:44:12.951Z",
+        "updatedAt": "2024-03-10T12:44:12.951Z",
+        "answers": [
+          {
+            "id": 53,
+            "body": "Hello, World 15!",
+            "is_correct": false,
+            "createdAt": "2024-03-10T12:44:12.951Z",
+            "updatedAt": "2024-03-10T12:44:12.951Z",
+            "questionId": 14
+          },
+          {
+            "id": 54,
+            "body": "Hello, World 16!",
+            "is_correct": false,
+            "createdAt": "2024-03-10T12:44:12.951Z",
+            "updatedAt": "2024-03-10T12:44:12.951Z",
+            "questionId": 14
+          },
+          {
+            "id": 55,
+            "body": "Hello, World 17!",
+            "is_correct": false,
+            "createdAt": "2024-03-10T12:44:12.951Z",
+            "updatedAt": "2024-03-10T12:44:12.951Z",
+            "questionId": 14
+          },
+          {
+            "id": 56,
+            "body": "Hello, World 18!",
+            "is_correct": true,
+            "createdAt": "2024-03-10T12:44:12.951Z",
+            "updatedAt": "2024-03-10T12:44:12.951Z",
+            "questionId": 14
+          }
+        ]
+      }
+     
+    ]
+  }
+}

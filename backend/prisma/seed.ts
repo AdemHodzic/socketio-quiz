@@ -15,6 +15,10 @@ const userData: Prisma.UserCreateInput[] = [
     username: 'car',
     password: 'password',
   },
+  {
+    username: 'admin',
+    password: 'password',
+  }
 ]
 
 // write me 7 questions with 4 answers each
