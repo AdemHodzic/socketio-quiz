@@ -29,9 +29,32 @@ export const join = async () => {
     return match;
 }
 
+// Questions
+
+export const getQuestions = async () => {
+    return await axios.get('/admin/questions').then(res => res.data);
+}
+
+export const createQuestions = async (questions: any) => {
+    return await axios.post('/admin/questions', questions);
+}
+
+export const updateQuestions = async (questions: any) => {
+    return await axios.put('/admin/questions', questions);
+}
+
+export const deleteQuestions = async (ids: string[]) => {
+    return await axios.delete('/admin/questions', { data: { ids } });
+}
+
 export default {
     login,
     register,
     me,
     join,
+
+    getQuestions,
+    createQuestions,
+    updateQuestions,
+    deleteQuestions,
 }

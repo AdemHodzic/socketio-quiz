@@ -6,6 +6,11 @@ import router from "../routes";
 
 const useAuth = defineStore('auth', {
     state: () => ({ user: null as any | null }),
+    getters: {
+        isAdmin(state) {
+            return state.user !== null && state.user?.username === 'admin';
+        }
+    },
     actions: {
         async login(username: string, password: string) {
             const token = await api.login(username, password);
