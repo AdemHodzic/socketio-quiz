@@ -14,7 +14,6 @@ const useAuth = defineStore('auth', {
     actions: {
         async login(username: string, password: string) {
             const token = await api.login(username, password);
-            console.log(token)
             localStorage.setItem('token', token);
             await this.me();
             router.push({ name: 'main' })

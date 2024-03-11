@@ -54,7 +54,6 @@ export default {
             this.questions = this.questions.filter(question => question.id !== id)
         },
         editQuestion(id) {
-            console.log('edit question', id)
             this.$router.push({
                 name: 'edit-question',
                 params: { id }

@@ -1,7 +1,6 @@
 import { Response, Request } from 'express';
 import prisma from '../db';
 import { Question, User } from '@prisma/client';
-import { cancelMatch, finishMatch } from './service';
 
 type QuestionResult = {
     question: string;
@@ -63,36 +62,6 @@ export const createMatch = async (req: Request, res: Response) => {
     return res.json(match)
 }
 
-
-
-export const leaveMatch = async (req: Request, res: Response) => {
-    //@ts-ignore
-    const user: User = req.user;
-    const { matchId } = req.params;
-
-    // delete the match user
-    await prisma.matchUser.deleteMany({
-        where: {
-            matchId: parseInt(matchId),
-            userId: user.id,
-        }
-    });
-
-    // change match state to 'CANCELLED' if previous state was 'WAITING'
-    // or 'FINISHED' if previous state was 'PLAYING'
-
-    let match = await prisma.match.findUnique({where: {id: parseInt(matchId)}});
-
-    if (match?.state === 'WAITING') {
-        match.state = 'CANCELLED';
-        match = await cancelMatch(parseInt(matchId));
-    } else if (match?.state === 'PLAYING') {
-        match.state = 'FINISHED';
-        match = await finishMatch(parseInt(matchId));
-    }
-
-    return res.json(match)
-}
 
 export const joinMatch = async (req: Request, res: Response) => {
     //@ts-ignore

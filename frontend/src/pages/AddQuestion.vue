@@ -62,7 +62,6 @@ export default {
         },
         async addQuestion() {
 
-            console.log('calllll')
             const question = {
                 body: this.body,
                 answers: this.answers
