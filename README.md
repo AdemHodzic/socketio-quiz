@@ -2,6 +2,8 @@
 
 This project is a simple "Who Want to be a Millionare?" clone
 
+[See Demo](https://www.loom.com/share/bbca7a456dfb41bf99c58544511504a4)
+
 ### How to run
 
 #### Backend
